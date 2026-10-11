@@ -1,0 +1,17 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+@theme inline {
+  --font-sans: var(--font-hind-siliguri);
+}
+
+body {
+  font-family: var(--font-sans);
+}
+html {
+  scroll-behavior: smooth;
+}
+
+@theme inline {
+  --font-notosans: var(--font-noto-bengali);
+}
