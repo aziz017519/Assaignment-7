@@ -134,7 +134,7 @@ const ProductDetailsContent = async ({
             ⚠️
           </div>
           <h1 className="mt-4 text-base font-bold text-gray-900 sm:text-lg">
-            তথ্য লোড করা যায়নি
+            তথ্য লোড করা যায়নি |
           </h1>
           <p className="mt-1 max-w-sm text-sm text-gray-500">
             সার্ভার থেকে পণ্যের তথ্য আনতে সমস্যা হচ্ছে। পেজ রিফ্রেশ করে আবার চেষ্টা করুন।
