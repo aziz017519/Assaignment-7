@@ -9,7 +9,7 @@ type CategoryProduct = Product & {
   categoryNameBn: string;
   categoryIcon: string;
 };
-
+ // all prodcut get
 const getProducts = async (slug: string): Promise<CategoryProduct[]> => {
   "use cache";
   cacheLife("hours");
