@@ -1,8 +1,4 @@
-# বাজার দর (BazarDor)
 
-Live site: https://bazardor-a07-mhr.vercel.app
-
-GitHub repo: https://github.com/mehediramim-13/bazardor-a07-mhr.git
 
 ## About the project
 
