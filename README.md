@@ -62,17 +62,20 @@ cd <project-folder>
 npm install
 ```
 
-3. Create a `.env.local` file in the root folder and add these values.
+3. Copy `.env.example` to `.env.local` in the root folder and fill in the values.
 
 ```env
 MONGODB_URL=your_mongodb_connection_string
+BETTER_AUTH_SECRET=random_secret_at_least_32_characters
 BETTER_AUTH_URL=http://localhost:3000
-NEXT_PUBLIC_BETTER_AUTH_URL=http://localhost:3000
-GOOGLE_CLIENT_ID=your_google_client_id
-GOOGLE_CLIENT_SECRET=your_google_client_secret
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+BETTER_AUTH_GOOGLE_CLIENT_ID=your_google_client_id
+BETTER_AUTH_GOOGLE_SECRET=your_google_client_secret
 GITHUB_CLIENT_ID=your_github_client_id
 GITHUB_CLIENT_SECRET=your_github_client_secret
 ```
+
+`.env.local` is gitignored. The aliases `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` and `NEXT_PUBLIC_BETTER_AUTH_URL` also work, but the names above are the ones to use.
 
 4. Start the dev server.
 
@@ -81,6 +84,25 @@ npm run dev
 ```
 
 5. Open http://localhost:3000 in your browser.
+
+## Deploying to Vercel
+
+The build settings live in `vercel.json` (Next.js preset, `npm install`, `npm run build`). Route protection is handled by `src/proxy.ts` through Next.js, so no extra Vercel routing config is needed. See `VERCEL_SETUP.md` for the full checklist.
+
+1. In Vercel, import the GitHub repo and keep the detected settings: Framework Preset **Next.js**, Root Directory `./`, Node.js **22.x**, Build Command `npm run build`, Install Command `npm install`.
+2. Open **Project Settings > Environment Variables** and add every key from `.env.example`. Add it to **Production**, **Preview** and **Development** (or use `vercel env pull` after adding Development variables).
+3. Keep `BETTER_AUTH_SECRET` identical in all environments. Generate one with `npx auth secret` and store it as a Secret variable.
+4. Set `BETTER_AUTH_URL` and `NEXT_PUBLIC_APP_URL` to `https://bazardor-a07-mhr.vercel.app` (or your custom domain) in Production. Auth URLs are resolved per request, so preview deployments get their own callback URLs automatically.
+5. In **Project Settings**, enable **Access to System Environment Variables** so `VERCEL_URL` is available.
+6. In the Google and GitHub OAuth app settings, add these callback URLs (add each preview URL you actually use too):
+
+   ```txt
+   https://bazardor-a07-mhr.vercel.app/api/auth/callback/google
+   https://bazardor-a07-mhr.vercel.app/api/auth/callback/github
+   ```
+
+7. Push to the production branch (or run `vercel --prod`). After changing an environment variable, redeploy: existing deployments keep their old values.
+8. Check `/`, `/signin`, email sign up/in, Google and GitHub sign in, `/profile` and a protected `/product-details/[id]` page.
 
 ## Folder overview
 
